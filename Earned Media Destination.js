@@ -1219,7 +1219,7 @@ function createTotalMetricCards() {
     // Define metrics to display
     const metricsToDisplay = ['Mentions', 'Reach', 'Sentiment'];
     
-    // Create YTD cards for each metric FIRST
+    // Create YTD cards for each metric
     metricsToDisplay.forEach(metric => {
       try {
         console.log(`Creating YTD total card for ${metric}...`);
@@ -1278,76 +1278,6 @@ function createTotalMetricCards() {
         console.log(`Successfully created YTD total card for ${metric}`);
       } catch (error) {
         console.error(`Error creating YTD total card for ${metric}:`, error);
-      }
-    });
-    
-    // THEN create a monthly card for each metric
-    metricsToDisplay.forEach(metric => {
-      try {
-        console.log(`Creating total card for ${metric}...`);
-        
-        if (!totalMetrics[metric]) {
-          console.warn(`No total data found for metric: ${metric}`);
-          return;
-        }
-        
-        // Get actual and forecast values for the latest month
-        const actual = totalMetrics[metric].actual[LATEST_MONTH] || 0;
-        const forecast = totalMetrics[metric].forecast[LATEST_MONTH] || 0;
-        
-        // Get YTD actual and forecast values
-        const ytdActual = totalMetrics[metric].ytdActual[LATEST_MONTH] || 0;
-        const ytdForecast = totalMetrics[metric].ytdForecast[LATEST_MONTH] || 0;
-        
-        // Calculate variance and achievement percentage
-        const variance = actual - forecast;
-        const variancePercent = forecast !== 0 ? (variance / forecast) * 100 : 0;
-        const achievement = ytdForecast !== 0 ? (ytdActual / ytdForecast) * 100 : 0;
-        
-        // Get MoM change
-        const momChange = totalMetrics[metric].momChange[LATEST_MONTH] || 0;
-        
-        // Create card element
-        const card = document.createElement('div');
-        card.className = 'metric-card total-metric-card';
-        
-        // Determine status classes based on performance
-        const varianceClass = variancePercent >= 0 ? 'positive' : 'negative';
-        const achievementClass = achievement >= 100 ? 'positive' : achievement >= 90 ? 'warning' : 'negative';
-        const momClass = momChange >= 0 ? 'positive' : 'negative';
-        
-        // Define icons for each metric
-        const metricIcons = {
-          'Mentions': 'fa-comment-dots',
-          'Reach': 'fa-globe',
-          'Sentiment': 'fa-smile'
-        };
-        
-        // Create card content
-        card.innerHTML = `
-          <div class="metric-name"><i class="fas ${metricIcons[metric] || 'fa-chart-line'}"></i> Monthly Total ${metric}</div>
-          <div class="metric-value">${formatNumber(actual, metric)}</div>
-          <div class="metric-stats">
-            <div class="metric-stat">
-              <span class="stat-label">vs Forecast:</span>
-              <span class="stat-value ${varianceClass}">
-                ${variancePercent >= 0 ? '+' : ''}${variancePercent.toFixed(1)}%
-              </span>
-            </div>
-            <div class="metric-stat">
-              <span class="stat-label">MoM:</span>
-              <span class="stat-value ${momClass}">
-                ${momChange >= 0 ? '+' : ''}${momChange.toFixed(1)}%
-              </span>
-            </div>
-          </div>
-        `;
-        
-        // Add card to container
-        totalMetricsContainer.appendChild(card);
-        console.log(`Successfully created total card for ${metric}`);
-      } catch (error) {
-        console.error(`Error creating total card for ${metric}:`, error);
       }
     });
     

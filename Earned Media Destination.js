@@ -19,7 +19,7 @@ const CHART_COLORS = {
 
 // Constants for frequently used values
 const METRICS_CONTAINER_ID = 'metrics-container';
-const LATEST_MONTH = 'March'; // Make sure this matches exactly with the month name in the CSV
+const LATEST_MONTH = 'April'; // Make sure this matches exactly with the month name in the CSV
 const TOGGLE_DARK_MODE_ID = 'toggle-dark-mode';
 
 /**
@@ -589,8 +589,8 @@ function createActualVsForecastChart(canvasId, data, initiative, subInitiative, 
     const allMonths = Object.keys(metricData.actual);
     console.log(`All months in data: ${allMonths.join(', ')}`);
     
-    // Filter for Q1 months (January, February, March)
-    const q1Months = ['January', 'February', 'March'];
+    // Filter for January through April
+    const q1Months = ['January', 'February', 'March', 'April'];
     const months = allMonths.filter(month => q1Months.includes(month));
     
     if (months.length === 0) {
@@ -811,7 +811,7 @@ function createActualVsForecastChart(canvasId, data, initiative, subInitiative, 
 function createMonthlyTrendChart(canvasId, data, metric) {
   const ctx = document.getElementById(canvasId).getContext('2d');
   
-  const months = MONTHS.slice(0, 3); // Only Q1 months
+  const months = MONTHS.slice(0, 4); // January through April
   const datasets = [];
   
   // Define specific colors for each sub-initiative for consistency
@@ -883,7 +883,7 @@ function createMonthlyTrendChart(canvasId, data, metric) {
         ...chartOptions.plugins,
         title: {
           display: true,
-          text: `Monthly ${metric} Trend - Q1 2025`,
+          text: `Monthly ${metric} Trend - January-April 2025`,
           color: '#e2e8f0',
           font: {
             family: "'Inter', sans-serif",
@@ -903,7 +903,7 @@ function createYTDAchievementChart(canvasId, data, ytdAchievement) {
   const ctx = document.getElementById(canvasId).getContext('2d');
   
   const datasets = [];
-  const latestMonth = 'March'; // Latest month with actual data
+  const latestMonth = 'April'; // Latest month with actual data
   
   console.log('Creating YTD achievement chart with data for month:', latestMonth);
   
@@ -1025,7 +1025,7 @@ function createYTDAchievementChart(canvasId, data, ytdAchievement) {
 function createPerformanceHeatmap(canvasId, data, ytdAchievement) {
   const ctx = document.getElementById(canvasId).getContext('2d');
   
-  const latestMonth = 'March'; // Latest month with actual data
+  const latestMonth = 'April'; // Latest month with actual data
   const datasets = [];
   
   // Define performance color ranges using our new color palette

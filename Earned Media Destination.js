@@ -19,7 +19,7 @@ const CHART_COLORS = {
 
 // Constants for frequently used values
 const METRICS_CONTAINER_ID = 'metrics-container';
-const LATEST_MONTH = 'September'; // Make sure this matches exactly with the month name in the CSV
+const LATEST_MONTH = 'December'; // Updated to show full year 2025 data
 const TOGGLE_DARK_MODE_ID = 'toggle-dark-mode';
 
 /**
@@ -589,8 +589,8 @@ function createActualVsForecastChart(canvasId, data, initiative, subInitiative, 
     const allMonths = Object.keys(metricData.actual);
     console.log(`All months in data: ${allMonths.join(', ')}`);
     
-    // Filter for January through September
-    const availableMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'];
+    // Filter for January through December (full year)
+    const availableMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const months = allMonths.filter(month => availableMonths.includes(month));
     
     if (months.length === 0) {
@@ -811,7 +811,7 @@ function createActualVsForecastChart(canvasId, data, initiative, subInitiative, 
 function createMonthlyTrendChart(canvasId, data, metric) {
   const ctx = document.getElementById(canvasId).getContext('2d');
   
-  const months = MONTHS.slice(0, 9); // January through September
+  const months = MONTHS.slice(0, 12); // January through December - Full year
   const datasets = [];
   
   // Define specific colors for each sub-initiative for consistency
@@ -883,7 +883,7 @@ function createMonthlyTrendChart(canvasId, data, metric) {
         ...chartOptions.plugins,
         title: {
           display: true,
-          text: `Monthly ${metric} Trend - January-September 2025`,
+          text: `Monthly ${metric} Trend - Full Year 2025`,
           color: '#e2e8f0',
           font: {
             family: "'Inter', sans-serif",
@@ -903,7 +903,7 @@ function createYTDAchievementChart(canvasId, data, ytdAchievement) {
   const ctx = document.getElementById(canvasId).getContext('2d');
   
   const datasets = [];
-  const latestMonth = 'September'; // Latest month with actual data
+  const latestMonth = LATEST_MONTH; // Use the constant for latest month
   
   console.log('Creating YTD achievement chart with data for month:', latestMonth);
   
